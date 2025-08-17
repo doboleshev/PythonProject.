@@ -1,5 +1,3 @@
-from datetime import datetime_CAPI
-
 def mask_account_card(data: str, re=None) -> str:
     # Ищем тип (слово) и номер (только цифры)
     match = re.match(r'^(\D+)(\d+)$', data.strip())
