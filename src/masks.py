@@ -18,6 +18,7 @@ def get_mask_account(account_number: str | int) -> str:
     """
     Маскирует номер банковского счета, оставляя только последние 4 цифры.
     Первые цифры заменяются на звездочки (*).
+    :rtype: str
     """
     str_account = str(account_number).strip()
 
