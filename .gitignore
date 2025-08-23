@@ -5,5 +5,3 @@ __pycache__/
 test/
 pyproject.toml
 @pytest.fixture
-return
-"get_date
