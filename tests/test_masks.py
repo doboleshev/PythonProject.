@@ -9,6 +9,7 @@ def test_get_mask_card_number_short() -> None:
     with pytest.raises(ValueError):
         get_mask_card_number("1234")
 
+
 def test_get_mask_card_number_empty() -> None:
     with pytest.raises(ValueError):
         get_mask_card_number("")
@@ -40,3 +41,17 @@ def test_get_mask_account_edge_cases() -> None:
     # Проверяем, что функция корректно обрабатывает граничные значения
     assert get_mask_account("1234") == "1234"  # Ровно 4 символа
 
+
+@pytest.fixture
+def test_mask_account_card_valid(data: str, expected: str) -> None:
+    """Тестирование валидных входных данных"""
+    result = mask_account_card(data)
+    assert expected == result
+
+
+@pytest.fixture
+def test_get_date_valid_formats(date_str: str, expected: str) -> None:
+    """Тестирование валидных форматов дат"""
+    result = get_date(date_str)
+    assert result == expected
+    assert isinstance(result, str)
