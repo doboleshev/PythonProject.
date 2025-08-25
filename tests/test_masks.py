@@ -1,5 +1,6 @@
 import pytest
 
+from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
 from src.masks import get_mask_card_number, get_mask_account
 from src.widget import mask_account_card, get_date
 
@@ -55,3 +56,49 @@ def test_get_date_valid_formats(date_str: str, expected: str) -> None:
     result = get_date(date_str)
     assert result == expected
     assert isinstance(result, str)
+
+
+transactions = [{"id": 1, "amount": 100, "currency": "USD", "description": "Purchase"},]
+
+print("=== Тестирование filter_by_currency ===")
+
+# Тест 1: Фильтрация USD транзакций
+print("\n1. Фильтрация USD транзакций:")
+usd_transactions = list(filter_by_currency(transactions, "USD"))
+print(f"Найдено {len(usd_transactions)} USD транзакций:")
+for transaction in usd_transactions:
+    print(f"  ID: {transaction['id']}, Amount: {transaction['amount']}")
+
+
+transactions = [{"id": 1, "amount": 100, "currency": "USD", "description": "Покупка в магазине"},]
+
+print("=== Тестирование transaction_descriptions ===")
+
+print("\n1. Все описания транзакций:")
+descriptions = list(transaction_descriptions(transactions))
+print(f"Получено {len(descriptions)} описаний:")
+for i, desc in enumerate(descriptions, 1):
+    print(f"  {i}. '{desc}'")
+
+
+print("=== Тестирование card_number_generator ===")
+
+# Тест 1: Генерация первых 5 номеров
+print("\n1. Первые 5 номеров карт:")
+generator = card_number_generator(1, 5)
+first_five = list(generator)
+for i, card in enumerate(first_five, 1):
+    print(f"  {i}: {card}")
+
+expected_first_five = [
+    "0000 0000 0000 0001",
+    "0000 0000 0000 0002",
+    "0000 0000 0000 0003",
+    "0000 0000 0000 0004",
+    "0000 0000 0000 0005"
+]
+
+if first_five == expected_first_five:
+    print("✓ Первые 5 номеров корректны")
+else:
+    print("✗ Ошибка в первых 5 номерах")
